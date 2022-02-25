@@ -1,6 +1,6 @@
 /*
 Program Name: Elevator.java
-Author: Monique Leung
+Author: Monique L
 Date: Feb 24, 2022
 */
 
