@@ -23,7 +23,7 @@ public class Elevator {
         try (Stream<String> stream = Files.lines(Paths.get(INSTRUCTION))) {
             stream.forEach(System.out::println);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Exception: Instruction file not found");
         }
         System.out.println();
         System.out.println("-----------------GAME STARTS!-----------------");
