@@ -1,0 +1,8 @@
+There is a thief in this building. What you have to do is to chase after him.
+
+This is the pattern of how he moves:
+1. If you are at 1-2 floor(s) above or below him, he will move 3 floors up or down.
+2. If you are >2 floors away from him, he will move 2 floors up or down.
+3. If he is too close to the highest or lowest floor, he may move less than 2 or 3 floors and stay in highest or lowest floor in that round.
+
+You can only move at most 3 floors each time and have 6 chances to catch him, or he will leave out of your sight forever!
