@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class Elevator {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         final String INSTRUCTION = "instructions.txt";
 
         System.out.println("===================ELEVATOR===================");
@@ -113,35 +113,24 @@ public class Elevator {
         input.close();
     }
 
-    public static void moveEscalator(int nextFloor, int currentFloor) {
-        // initialize the count of the floor display
-        int count = 0;
-
-        // user wants to go to higher level
+    public static void moveEscalator(int nextFloor, int currentFloor) throws InterruptedException {
+        System.out.println();
+        System.out.println();
+        // user wants to go to higher level, draw escalator moving upwards
         if (nextFloor > currentFloor) {
-            System.out.println();
-            System.out.println();
             System.out
                     .printf("THE ELEVATOR IS MOVING UP FROM FLOOR %d TO FLOOR %d.", currentFloor, nextFloor);
+
             System.out.println();
-            count = nextFloor;
-
-            // draw escalator going upwards until reaching the destination
-
-            for (int i = count; i >= currentFloor; i--) {
+            for (int i = currentFloor; i <= nextFloor; i++) {
                 moveUp(i);
             }
-        } else {
-
-            // user wants to go to lower level
-            System.out.println();
+        } else { // user wants to go to lower level, draw escalator moving downwards
             System.out
-                    .printf("THE ELEVATOR IS MOVING DOWN FROM FLOOR %2d TO FLOOR %2d.", currentFloor, nextFloor);
-            System.out.println();
-            count = currentFloor;
+                    .printf("THE ELEVATOR IS MOVING DOWN FROM FLOOR %d TO FLOOR %d.", currentFloor, nextFloor);
 
-            // draw escalator going downwards until reaching the destination
-            for (int i = count; i >= nextFloor; i--) {
+            System.out.println();
+            for (int i = currentFloor; i >= nextFloor; i--) {
                 moveDown(i);
             }
         }
@@ -174,14 +163,16 @@ public class Elevator {
     }
 
     // print elevator going upwards
-    public static void moveUp(int floor) {
+    public static void moveUp(int floor) throws InterruptedException {
+        Thread.sleep(1000);
         System.out.println(":-------:     /\\  ");
         System.out.printf("|   %-2d  |    //\\\\\n", floor);
         System.out.println(":-------:   //  \\\\");
     }
 
     // print elevator going downwards
-    public static void moveDown(int floor) {
+    public static void moveDown(int floor) throws InterruptedException {
+        Thread.sleep(1000);
         System.out.println(":-------:  \\\\  //");
         System.out.printf("|   %-2d  |   \\\\//\n", floor);
         System.out.println(":-------:    \\/  ");
