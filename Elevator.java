@@ -6,17 +6,30 @@ Date:			Feb 24, 2022
 
 // Objective: This is a game for chasing after a thief by taking elevator. 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Elevator {
 
     public static void main(String[] args) {
+        final String INSTRUCTION = "instructions.txt";
+
+        System.out.println("================CHASE AFTER HIM!================");
+        System.out.println();
+        System.out.println("-----------------INSTRUCTIONS-----------------");
+        try (Stream<String> stream = Files.lines(Paths.get(INSTRUCTION))) {
+            stream.forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println();
+        System.out.println("-----------------GAME STARTS!-----------------");
+        System.out.println();
 
         // Print the initial floor of the elevator
-        System.out.println("=====CHASE AFTER HIM!=====");
-        System.out.println(
-                "\nThere is a thief in this building. What you have to do is to chase after him. \n\nThis is the pattern of how he moves:\n1. If you are at 1-2 floor(s) above or below him, he will move 3 floors up or down.\n2. If you are >2 floors away from him, he will move 2 floors up or down.\n3. If he is too close to the highest or lowest floor, he may move less than 2 or 3 floors and stay in highest or lowest floor in that round.\n\nYou can only move at most 3 floors each time and have 6 chances to catch him, or he will leave out of your sight forever!\n");
-        System.out.println("-----------------GAME STARTS!-----------------\n");
         System.out.println(":-------:  ");
         System.out.println("|   1   |  ");
         System.out.println(":-------:  ");
@@ -38,7 +51,8 @@ public class Elevator {
         while (nextFloor != thiefLocation) {
 
             // display error message if invalid input and skip the loop
-            if (nextFloor > 15 || nextFloor < 1 || Math.abs(nextFloor - currentFloor) > 3 || nextFloor == currentFloor) {
+            if (nextFloor > 15 || nextFloor < 1 || Math.abs(nextFloor - currentFloor) > 3
+                    || nextFloor == currentFloor) {
                 System.out.println("Invalid input. Please try again.\n");
                 System.out.print("- Enter a floor number (move at most 3 floors between 1F and 15F): ");
                 nextFloor = input.nextInt();
@@ -51,29 +65,28 @@ public class Elevator {
             // update the currentFloor value
             currentFloor = nextFloor;
 
-
             // reduce the input chance
             inputChance--;
 
-            //if no more chance left
+            // if no more chance left
             if (inputChance == 0) {
                 // tell the location of thief and display game over message
-                System.out.println("GAME OVER! The thief was in Floor "+thiefLocation+".");
+                System.out.println("GAME OVER! The thief was in Floor " + thiefLocation + ".");
                 System.out.println("You have used up all your chances! He is gone!");
                 break;
             } else { // if still have chance(s) left
                 // move the thief
                 thiefLocation = moveThief(currentFloor, thiefLocation);
-                
+
                 // System.out.println(thiefLocation);
-                
+
                 // give tips
                 if (Math.abs(thiefLocation - currentFloor) > 5) {
                     System.out.printf("Tips: The thief is %d floor(s) away from you.\n",
                             Math.abs(thiefLocation - currentFloor));
-                } else if (Math.abs(thiefLocation - currentFloor) <=3) {
+                } else if (Math.abs(thiefLocation - currentFloor) <= 3) {
                     System.out.println("Tips: The thief is <=3 floor(s) away from you.");
-                } else if (Math.abs(thiefLocation - currentFloor) <=5) {
+                } else if (Math.abs(thiefLocation - currentFloor) <= 5) {
                     System.out.println("Tips: The thief is <=5 floor(s) away from you.");
                 }
                 // get a new input from user and continue the loop
@@ -151,20 +164,22 @@ public class Elevator {
         if (currentFloor > thiefLocation) {
             // if the thief is in lower floor
             if (thiefLocation == 1) {
-                // the thief is on floor 1, move 3 floors up if <= 2 floors above, or move 2 floors up if >2 floors above
-                thiefLocation = (currentFloor - thiefLocation <= 2) ? thiefLocation + 3: thiefLocation +2;
+                // the thief is on floor 1, move 3 floors up if <= 2 floors above, or move 2
+                // floors up if >2 floors above
+                thiefLocation = (currentFloor - thiefLocation <= 2) ? thiefLocation + 3 : thiefLocation + 2;
             } else if (currentFloor - thiefLocation <= 2) {
                 // the thief is 1-2 floor(s) below, move 3 floors upwards or downwards
                 thiefLocation = (moveChance == 0) ? Math.max(1, thiefLocation - 3) : Math.min(15, thiefLocation + 3);
             } else if (currentFloor - thiefLocation > 2) {
                 // the thief is >2 floors below, move 3 floors upwards or downwards
                 thiefLocation = (moveChance == 0) ? Math.max(1, thiefLocation - 2) : Math.min(15, thiefLocation + 2);
-            } 
+            }
         } else {
             // if the thief is in higher floor
             if (thiefLocation - currentFloor <= 2 && thiefLocation == 15) {
-                // the thief is on floor 15, move 3 floors down if <= 2 floors above, or move 2 floors down if >2 floors above
-                thiefLocation = (thiefLocation - currentFloor <=2) ? thiefLocation - 3: thiefLocation -2;
+                // the thief is on floor 15, move 3 floors down if <= 2 floors above, or move 2
+                // floors down if >2 floors above
+                thiefLocation = (thiefLocation - currentFloor <= 2) ? thiefLocation - 3 : thiefLocation - 2;
             } else if (thiefLocation - currentFloor <= 2) {
                 // the thief is 1-2 floor(s) above, move 3 floors upwards or downwards
                 thiefLocation = (moveChance == 0) ? Math.max(1, thiefLocation - 3) : Math.min(15, thiefLocation + 3);
