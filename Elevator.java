@@ -84,8 +84,6 @@ public class Elevator {
                 // move the thief
                 thiefLocation = moveThief(currentFloor, thiefLocation);
 
-                // System.out.println(thiefLocation);
-
                 // give tips
                 if (Math.abs(thiefLocation - currentFloor) > 5) {
                     System.out.println();
@@ -130,12 +128,9 @@ public class Elevator {
             count = nextFloor;
 
             // draw escalator going upwards until reaching the destination
-            while (true) {
+
+            for (int i = count; i >= currentFloor; i--) {
                 moveUp(count);
-                count--;
-                if (count < currentFloor) {
-                    break;
-                }
             }
         } else {
 
@@ -147,12 +142,8 @@ public class Elevator {
             count = currentFloor;
 
             // draw escalator going downwards until reaching the destination
-            while (true) {
+            for (int i = count; i >= nextFloor; i--) {
                 moveDown(count);
-                count--;
-                if (count < nextFloor) {
-                    break;
-                }
             }
         }
         // print out the existing location
