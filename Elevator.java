@@ -35,7 +35,10 @@ public class Elevator {
         System.out.println(":-------:  ");
 
         int currentFloor = 1;
-        System.out.println("\nYOU ARE AT FLOOR " + currentFloor + " NOW.\n");
+        System.out.println();
+        System.out.printf("YOU ARE AT FLOOR %d NOW.", currentFloor);
+        System.out.println();
+        System.out.println();
 
         // thief is between Floor 2 and 15
         int thiefLocation = (int) (Math.random() * 11) + 5;
@@ -53,7 +56,8 @@ public class Elevator {
             // display error message if invalid input and skip the loop
             if (nextFloor > 15 || nextFloor < 1 || Math.abs(nextFloor - currentFloor) > 3
                     || nextFloor == currentFloor) {
-                System.out.println("Invalid input. Please try again.\n");
+                System.out.println("Invalid input. Please try again.");
+                System.out.println();
                 System.out.print("- Enter a floor number (move at most 3 floors between 1F and 15F): ");
                 nextFloor = input.nextInt();
                 continue;
@@ -71,7 +75,9 @@ public class Elevator {
             // if no more chance left
             if (inputChance == 0) {
                 // tell the location of thief and display game over message
-                System.out.println("GAME OVER! The thief was in Floor " + thiefLocation + ".");
+                System.out.println();
+                System.out.printf("GAME OVER! The thief was in Floor %d.", thiefLocation);
+                System.out.println();
                 System.out.println("You have used up all your chances! He is gone!");
                 break;
             } else { // if still have chance(s) left
@@ -82,23 +88,30 @@ public class Elevator {
 
                 // give tips
                 if (Math.abs(thiefLocation - currentFloor) > 5) {
-                    System.out.printf("Tips: The thief is %d floor(s) away from you.\n",
+                    System.out.println();
+                    System.out.printf("Tips: The thief is %d floor(s) away from you.",
                             Math.abs(thiefLocation - currentFloor));
+                    System.out.println();
                 } else if (Math.abs(thiefLocation - currentFloor) <= 3) {
+                    System.out.println();
                     System.out.println("Tips: The thief is <=3 floor(s) away from you.");
                 } else if (Math.abs(thiefLocation - currentFloor) <= 5) {
+                    System.out.println();
                     System.out.println("Tips: The thief is <=5 floor(s) away from you.");
                 }
                 // get a new input from user and continue the loop
-                System.out.print("\nYou have " + inputChance
-                        + " more chance(s).\n\n- Enter a floor number (move at most 3 floors between 1F and 15F): ");
+                System.out.println();
+                System.out.printf("You have %d more chance(s).", inputChance);
+                System.out.println();
+                System.out.print("- Enter a floor number (move at most 3 floors between 1F and 15F): ");
                 nextFloor = input.nextInt();
             }
         }
         // if user caught the thief, end the program and display thank you message
         if (nextFloor == thiefLocation) {
             moveEscalator(nextFloor, currentFloor);
-            System.out.println("\nBINGO! You caught the thief!");
+            System.out.println();
+            System.out.println("BINGO! You caught the thief!");
         }
         input.close();
     }
@@ -109,9 +122,11 @@ public class Elevator {
 
         // user wants to go to higher level
         if (nextFloor > currentFloor) {
+            System.out.println();
+            System.out.println();
             System.out
-                    .println("\nTHE ELEVATOR IS MOVING UP FROM FLOOR " + currentFloor + " TO FLOOR " + nextFloor
-                            + ".\n");
+                    .printf("THE ELEVATOR IS MOVING UP FROM FLOOR %d TO FLOOR %d.", currentFloor, nextFloor);
+            System.out.println();
             count = nextFloor;
 
             // draw escalator going upwards until reaching the destination
@@ -125,8 +140,10 @@ public class Elevator {
         } else {
 
             // user wants to go to lower level
-            System.out.println(
-                    "\nTHE ELEVATOR IS MOVING DOWN FROM FLOOR " + currentFloor + " TO FLOOR " + nextFloor + ".\n");
+            System.out.println();
+            System.out
+                    .printf("THE ELEVATOR IS MOVING DOWN FROM FLOOR %2d TO FLOOR %2d.", currentFloor, nextFloor);
+            System.out.println();
             count = currentFloor;
 
             // draw escalator going downwards until reaching the destination
@@ -139,7 +156,9 @@ public class Elevator {
             }
         }
         // print out the existing location
-        System.out.println("\nYOU ARE AT FLOOR " + nextFloor + " NOW.\n");
+        System.out.println();
+        System.out.printf("YOU ARE AT FLOOR %d NOW.", nextFloor);
+        System.out.println();
     }
 
     // print elevator going upwards
