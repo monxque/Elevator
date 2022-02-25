@@ -84,16 +84,17 @@ public class Elevator {
                 // move the thief
                 thiefLocation = moveThief(currentFloor, thiefLocation);
 
+                int distance = Math.abs(thiefLocation - currentFloor);
+
                 // give tips
-                if (Math.abs(thiefLocation - currentFloor) > 5) {
+                if (distance > 5) {
                     System.out.println();
-                    System.out.printf("Tips: The thief is %d floor(s) away from you.",
-                            Math.abs(thiefLocation - currentFloor));
+                    System.out.printf("Tips: The thief is %d floor(s) away from you.", distance);
                     System.out.println();
-                } else if (Math.abs(thiefLocation - currentFloor) <= 3) {
+                } else if (distance <= 3) {
                     System.out.println();
                     System.out.println("Tips: The thief is <=3 floor(s) away from you.");
-                } else if (Math.abs(thiefLocation - currentFloor) <= 5) {
+                } else if (distance <= 5) {
                     System.out.println();
                     System.out.println("Tips: The thief is <=5 floor(s) away from you.");
                 }
@@ -171,20 +172,22 @@ public class Elevator {
         // move the thief according to distance with the player
         int moveChance = (int) Math.random() * 2;
 
+        int distance = Math.abs(thiefLocation - currentFloor);
+
         if (thiefLocation == 1) {
             // the thief is on floor 1, move 3 floors up if player is <= 2 floors above, or
             // move 2
             // floors up if player is >2 floors above
-            thiefLocation = (currentFloor - thiefLocation <= 2) ? thiefLocation + 3 : thiefLocation + 2;
+            thiefLocation = (distance <= 2) ? thiefLocation + 3 : thiefLocation + 2;
         } else if (thiefLocation == 15) {
             // the thief is on floor 15, move 3 floors down if player is <= 2 floors below,
             // or move 2
             // floors down if player is >2 floors below
-            thiefLocation = (thiefLocation - currentFloor <= 2) ? thiefLocation - 3 : thiefLocation - 2;
-        } else if (Math.abs(currentFloor - thiefLocation) <= 2) {
+            thiefLocation = (distance <= 2) ? thiefLocation - 3 : thiefLocation - 2;
+        } else if (distance <= 2) {
             // the thief is 1-2 floor(s) away, move 3 floors upwards or downwards
             thiefLocation = (moveChance == 0) ? Math.max(1, thiefLocation - 3) : Math.min(15, thiefLocation + 3);
-        } else if (Math.abs(currentFloor - thiefLocation) > 2) {
+        } else if (distance > 2) {
             // the thief is >2 floors away, move 2 floors upwards or downwards
             thiefLocation = (moveChance == 0) ? Math.max(1, thiefLocation - 2) : Math.min(15, thiefLocation + 2);
         }
