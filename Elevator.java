@@ -17,7 +17,7 @@ public class Elevator {
     public static void main(String[] args) {
         final String INSTRUCTION = "instructions.txt";
 
-        System.out.println("================CHASE AFTER HIM!================");
+        System.out.println("===================ELEVATOR===================");
         System.out.println();
         System.out.println("-----------------INSTRUCTIONS-----------------");
         try (Stream<String> stream = Files.lines(Paths.get(INSTRUCTION))) {
