@@ -50,7 +50,7 @@ public class Elevator {
         int inputChance = 6;
 
         // set a loop to print the elevator movement and tips
-        while (nextFloor != thiefLocation) {
+        for (int i = inputChance; i >= 0 && nextFloor != thiefLocation; i--) {
 
             // display error message if invalid input and skip the loop
             if (nextFloor > 15 || nextFloor < 1 || Math.abs(nextFloor - currentFloor) > 3
@@ -59,52 +59,48 @@ public class Elevator {
                 System.out.println();
                 System.out.print("- Enter a floor number (move at most 3 floors between 1F and 15F): ");
                 nextFloor = input.nextInt();
+                i++;  // invalid input does not consume one input chance
                 continue;
             }
 
             // draw the escalator movement
             moveEscalator(nextFloor, currentFloor);
 
-            // update the currentFloor value
-            currentFloor = nextFloor;
-
-            // reduce the input chance
-            inputChance--;
-
-            // if no more chance left
-            if (inputChance == 0) {
-                // tell the location of thief and display game over message
+            // if used up all chances, tell the location of thief and display game over message
+            if (i-1 == 0) {
                 System.out.println();
                 System.out.printf("GAME OVER! The thief was in Floor %d.", thiefLocation);
                 System.out.println();
                 System.out.println("You have used up all your chances! He is gone!");
                 break;
-            } else { // if still have chance(s) left
-                // move the thief
-                thiefLocation = moveThief(currentFloor, thiefLocation);
-
-                int distance = Math.abs(thiefLocation - currentFloor);
-
-                // give tips
-                if (distance > 5) {
-                    System.out.println();
-                    System.out.printf("Tips: The thief is %d floor(s) away from you.", distance);
-                    System.out.println();
-                } else if (distance <= 3) {
-                    System.out.println();
-                    System.out.println("Tips: The thief is <=3 floor(s) away from you.");
-                } else if (distance <= 5) {
-                    System.out.println();
-                    System.out.println("Tips: The thief is <=5 floor(s) away from you.");
-                }
-                // get a new input from user and continue the loop
-                System.out.println();
-                System.out.printf("You have %d more chance(s).", inputChance);
-                System.out.println();
-                System.out.print("- Enter a floor number (move at most 3 floors between 1F and 15F): ");
-                nextFloor = input.nextInt();
             }
+            // update the currentFloor value
+            currentFloor = nextFloor;
+
+            thiefLocation = moveThief(currentFloor, thiefLocation);
+
+            int distance = Math.abs(thiefLocation - currentFloor);
+
+            // give tips
+            if (distance > 5) {
+                System.out.println();
+                System.out.printf("Tips: The thief is %d floor(s) away from you.", distance);
+                System.out.println();
+            } else if (distance <= 3) {
+                System.out.println();
+                System.out.println("Tips: The thief is <=3 floor(s) away from you.");
+            } else if (distance <= 5) {
+                System.out.println();
+                System.out.println("Tips: The thief is <=5 floor(s) away from you.");
+            }
+            // get a new input from user and continue the loop
+            System.out.println();
+            System.out.printf("You have %d more chance(s).", i-1);
+            System.out.println();
+            System.out.print("- Enter a floor number (move at most 3 floors between 1F and 15F): ");
+            nextFloor = input.nextInt();
         }
+    
         // if user caught the thief, end the program and display thank you message
         if (nextFloor == thiefLocation) {
             moveEscalator(nextFloor, currentFloor);
