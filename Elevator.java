@@ -1,7 +1,7 @@
 /*
-Program Name:	Elevator.java
-Author: 		Monique Leung
-Date:			Feb 24, 2022
+Program Name: Elevator.java
+Author: Monique Leung
+Date: Feb 24, 2022
 */
 
 // Objective: This is a game for chasing after a thief by taking elevator. 
@@ -40,7 +40,7 @@ public class Elevator {
         System.out.println();
         System.out.println();
 
-        // thief is between Floor 2 and 15
+        // the thief is between Floor 2 and 15
         int thiefLocation = (int) (Math.random() * 11) + 5;
 
         // get a floor number from user
@@ -49,8 +49,7 @@ public class Elevator {
         int nextFloor = input.nextInt();
         int inputChance = 6;
 
-        // set a loop to print the movement of the elevator until the input matches the
-        // thief's location
+        // set a loop to print the elevator movement and tips
         while (nextFloor != thiefLocation) {
 
             // display error message if invalid input and skip the loop
@@ -176,13 +175,11 @@ public class Elevator {
 
         if (thiefLocation == 1) {
             // the thief is on floor 1, move 3 floors up if player is <= 2 floors above, or
-            // move 2
-            // floors up if player is >2 floors above
+            // move 2 floors up if player is >2 floors above
             thiefLocation = (distance <= 2) ? thiefLocation + 3 : thiefLocation + 2;
         } else if (thiefLocation == 15) {
             // the thief is on floor 15, move 3 floors down if player is <= 2 floors below,
-            // or move 2
-            // floors down if player is >2 floors below
+            // or move 2 floors down if player is >2 floors below
             thiefLocation = (distance <= 2) ? thiefLocation - 3 : thiefLocation - 2;
         } else if (distance <= 2) {
             // the thief is 1-2 floor(s) away, move 3 floors upwards or downwards
