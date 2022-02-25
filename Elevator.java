@@ -43,23 +43,26 @@ public class Elevator {
         // the thief is between Floor 2 and 15
         int thiefLocation = (int) (Math.random() * 11) + 5;
 
-        // get a floor number from user
         Scanner input = new Scanner(System.in);
-        System.out.print("- Enter a floor number (move at most 3 floors between 1F and 15F): ");
-
-        int nextFloor = -1;
-        while (nextFloor == -1) {
-            String str = input.next();
-            nextFloor = getNextFloor(str, currentFloor);
-        }
 
         int inputChance = 6;
 
-        // set a loop to print the elevator movement and tips
-        for (int i = inputChance; i >= 0 && nextFloor != thiefLocation; i--) {
+        // set a loop to print the elevator movement and tips while input chance >0
+        do {
+            // get a floor number from user
+            System.out.println();
 
-            // display error message if invalid input and skip the loop
-            nextFloor = -1;
+            // tell user how many chances they have
+            if (inputChance == 6) {
+                System.out.printf("You have %d chance(s).", inputChance);
+            } else {
+                System.out.printf("You have %d more chance(s).", inputChance);
+            }
+            System.out.println();
+            System.out.print("- Enter a floor number (move at most 3 floors between 1F and 15F): ");
+
+            // display error message if invalid input
+            int nextFloor = -1;
             while (nextFloor == -1) {
                 String str = input.next();
                 nextFloor = getNextFloor(str, currentFloor);
@@ -68,15 +71,6 @@ public class Elevator {
             // draw the escalator movement
             moveEscalator(nextFloor, currentFloor);
 
-            // if used up all chances, tell the location of thief and display game over
-            // message
-            if (i - 1 == 0) {
-                System.out.println();
-                System.out.printf("GAME OVER! The thief was in Floor %d.", thiefLocation);
-                System.out.println();
-                System.out.println("You have used up all your chances! He is gone!");
-                break;
-            }
             // update the currentFloor value
             currentFloor = nextFloor;
 
@@ -96,19 +90,26 @@ public class Elevator {
                 System.out.println();
                 System.out.println("Tips: The thief is <=5 floor(s) away from you.");
             }
-            // get a new input from user and continue the loop
+
+            // if user caught the thief, end the program and display thank you message
+            if (nextFloor == thiefLocation) {
+                moveEscalator(nextFloor, currentFloor);
+                System.out.println();
+                System.out.println("BINGO! You caught the thief!");
+                break;
+            }
+
+        } while (--inputChance > 0); // reduce input chance by 1
+
+        // if used up all chances, tell the location of thief and display game over
+        // message
+        if (inputChance == 0) {
             System.out.println();
-            System.out.printf("You have %d more chance(s).", i - 1);
+            System.out.printf("GAME OVER! The thief was in Floor %d.", thiefLocation);
             System.out.println();
-            System.out.print("- Enter a floor number (move at most 3 floors between 1F and 15F): ");
+            System.out.println("You have used up all your chances! He is gone!");
         }
 
-        // if user caught the thief, end the program and display thank you message
-        if (nextFloor == thiefLocation) {
-            moveEscalator(nextFloor, currentFloor);
-            System.out.println();
-            System.out.println("BINGO! You caught the thief!");
-        }
         input.close();
     }
 
