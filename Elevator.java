@@ -126,7 +126,7 @@ public class Elevator {
             // draw escalator going upwards until reaching the destination
 
             for (int i = count; i >= currentFloor; i--) {
-                moveUp(count);
+                moveUp(i);
             }
         } else {
 
@@ -139,7 +139,7 @@ public class Elevator {
 
             // draw escalator going downwards until reaching the destination
             for (int i = count; i >= nextFloor; i--) {
-                moveDown(count);
+                moveDown(i);
             }
         }
         // print out the existing location
